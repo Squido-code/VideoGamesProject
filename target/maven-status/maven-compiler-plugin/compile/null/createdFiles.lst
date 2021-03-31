@@ -1,0 +1,14 @@
+com\guillermo\videoGamesProject\domain\Platform$PlatformBuilder.class
+com\guillermo\videoGamesProject\api\ApiHelper\GetAllPlatformsHelper.class
+com\guillermo\videoGamesProject\App.class
+com\guillermo\videoGamesProject\api\service\VideogamesApiServiceImpl.class
+com\guillermo\videoGamesProject\util\Resources.class
+com\guillermo\videoGamesProject\api\service\VideogamesApiService.class
+com\guillermo\videoGamesProject\ui\principal\view\PrincipalView.class
+com\guillermo\videoGamesProject\util\Constants.class
+com\guillermo\videoGamesProject\domain\Videogame.class
+com\guillermo\videoGamesProject\ui\principal\model\PrincipalModel.class
+com\guillermo\videoGamesProject\ui\principal\controller\PrincipalController.class
+com\guillermo\videoGamesProject\domain\Videogame$VideogameBuilder.class
+com\guillermo\videoGamesProject\domain\Platform.class
+com\guillermo\videoGamesProject\api\ApiHelper\GetPlatformGamesHelper.class
