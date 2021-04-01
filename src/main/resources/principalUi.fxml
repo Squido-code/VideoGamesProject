@@ -32,18 +32,10 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
 <VBox prefHeight="615.0" prefWidth="911.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <MenuBar VBox.vgrow="NEVER">
@@ -97,7 +89,8 @@
                   <ListView fx:id="lvPlatforms" onMouseClicked="#platformSelected" prefHeight="200.0" prefWidth="200.0" />
                </content>
             </ScrollPane>
-            <ImageView fx:id="ivdetails" fitHeight="150.0" fitWidth="200.0" layoutX="446.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
+             <ImageView fx:id="ivDetails" fitHeight="150.0" fitWidth="200.0" layoutX="446.0" layoutY="325.0"
+                        pickOnBounds="true" preserveRatio="true"/>
             <Label layoutX="432.0" layoutY="287.0" text="Details">
                <font>
                   <Font size="19.0" />

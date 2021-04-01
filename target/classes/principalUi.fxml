@@ -97,7 +97,7 @@
                   <ListView fx:id="lvPlatforms" onMouseClicked="#platformSelected" prefHeight="200.0" prefWidth="200.0" />
                </content>
             </ScrollPane>
-            <ImageView fx:id="ivdetails" fitHeight="150.0" fitWidth="200.0" layoutX="446.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ivDetails" fitHeight="150.0" fitWidth="200.0" layoutX="446.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
             <Label layoutX="432.0" layoutY="287.0" text="Details">
                <font>
                   <Font size="19.0" />
