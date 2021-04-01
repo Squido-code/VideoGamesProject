@@ -1,7 +1,6 @@
 package com.guillermo.videoGamesProject.api.service;
 
 import com.guillermo.videoGamesProject.api.ApiHelper.GetAllPlatformsHelper;
-
 import com.guillermo.videoGamesProject.api.ApiHelper.GetPlatformGamesHelper;
 import com.guillermo.videoGamesProject.domain.Videogame;
 import retrofit2.Retrofit;
@@ -12,7 +11,7 @@ import rx.Observable;
 import static com.guillermo.videoGamesProject.util.Constants.*;
 
 public class VideogamesApiServiceImpl {
-    private VideogamesApiService apiService;
+    private final VideogamesApiService apiService;
 
     public VideogamesApiServiceImpl() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -22,15 +21,18 @@ public class VideogamesApiServiceImpl {
                 .build();
         apiService = retrofit.create(VideogamesApiService.class);
     }
-    public Observable<GetAllPlatformsHelper> getAllPlatforms(){
 
-        return apiService.getAllPlatforms(APIKEY,PAGESIZE);
+    public Observable<GetAllPlatformsHelper> getAllPlatforms() {
+
+        return apiService.getAllPlatforms(APIKEY, PAGESIZE);
     }
-    public Observable<GetPlatformGamesHelper> getPlatformGames(int platformId){
-        return apiService.getPlatformGames(APIKEY,PAGESIZE,platformId);
+
+    public Observable<GetPlatformGamesHelper> getPlatformGames(String platformId) {
+        return apiService.getPlatformGames(APIKEY, PAGESIZE, platformId);
 
     }
-    public Observable<Videogame> getVideogameById(int id){
-        return apiService.getVideogame(id,APIKEY);
+
+    public Observable<Videogame> getVideogameById(int id) {
+        return apiService.getVideogame(id, APIKEY);
     }
 }

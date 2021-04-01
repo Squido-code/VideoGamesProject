@@ -2,8 +2,10 @@ package com.guillermo.videoGamesProject.ui.principal.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guillermo.videoGamesProject.api.ApiHelper.GetAllPlatformsHelper;
+import com.guillermo.videoGamesProject.api.ApiHelper.GetPlatformGamesHelper;
 import com.guillermo.videoGamesProject.api.service.VideogamesApiServiceImpl;
-import com.guillermo.videoGamesProject.domain.Platform;
+import com.guillermo.videoGamesProject.domain.Console;
+import com.guillermo.videoGamesProject.domain.Videogame;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -21,21 +23,32 @@ import java.util.concurrent.Executors;
 @Data
 @Builder
 public class PrincipalModel {
-    private ListView<Platform> lvPlatforms;
+    private ListView<Console> lvConsole;
     private ListView<String> lvDetails;
     private ImageView ivDetails;
     private ObservableList<String> olDetails;
-
+    private VideogamesApiServiceImpl videogamesApiService;
+    private ListView<Videogame> lvGames;
 
     public void start() {
-        VideogamesApiServiceImpl videogamesApiService = new VideogamesApiServiceImpl();
-        ObservableList<Platform> platformObservableList = FXCollections.observableArrayList();
-
+        videogamesApiService = new VideogamesApiServiceImpl();
+        ObservableList<Console> consoleObservableList = FXCollections.observableArrayList();
         videogamesApiService.getAllPlatforms()
                 .flatMapIterable(GetAllPlatformsHelper::getResults)
                 .subscribeOn(Schedulers.from(Executors.newSingleThreadExecutor()))
-                .subscribe(platformObservableList::add);
-        lvPlatforms.setItems(platformObservableList);
+                .subscribe(consoleObservableList::add);
+        lvConsole.setItems(consoleObservableList);
+    }
+
+    public void setVideogames(String id) {
+        ObservableList<Videogame> videogameObservableList = FXCollections.observableArrayList();
+
+        videogamesApiService.getPlatformGames(id)
+                .flatMapIterable(GetPlatformGamesHelper::getResults)
+                .subscribeOn(Schedulers.from(Executors.newSingleThreadExecutor()))
+                .subscribe(videogameObservableList::add);
+
+        lvGames.setItems(videogameObservableList);
     }
 
     public void showDetails(Object object, String uri) {
@@ -52,6 +65,7 @@ public class PrincipalModel {
         Map<String, String> map = new ObjectMapper().convertValue(object, Map.class);
         if(!map.isEmpty()){
             map.remove("image_background");
+            map.remove("background_image");
         }
 
         for (Map.Entry<String, String> entry : map.entrySet()) {

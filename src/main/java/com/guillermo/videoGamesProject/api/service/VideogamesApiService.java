@@ -12,10 +12,11 @@ public interface VideogamesApiService {
     @GET("/api/platforms")
     Observable<GetAllPlatformsHelper> getAllPlatforms(@Query("key") String apikey,
                                                       @Query("page_size") int pageSize);
+
     @GET("/api/games")
     Observable<GetPlatformGamesHelper> getPlatformGames(@Query("key") String apikey,
-                                                  @Query("page_size") int pageSize,
-                                                  @Query("platforms") int platformId);
+                                                        @Query("page_size") int pageSize,
+                                                        @Query("platforms") String platformId);
 
     @GET("/api/games/{id}")
     Observable<Videogame> getVideogame(@Path("id") int id, @Query("key") String apikey);

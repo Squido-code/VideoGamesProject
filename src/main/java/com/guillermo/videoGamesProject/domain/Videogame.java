@@ -2,21 +2,20 @@ package com.guillermo.videoGamesProject.domain;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.ToString;
-
-import java.net.URI;
 
 
 
 @Data
 @Builder
-@ToString
-public class Videogame {
-    private int id;
-    private String name;
-    private String description;
-    private int metacritic;
-    private String released;
-    private URI background_image;
 
+public class Videogame {
+    private String id;
+    private String name;
+    private String metacritic;
+    private String released;
+    private String background_image;
+
+    public String toString() {
+        return name;
+    }
 }
