@@ -14,26 +14,32 @@ import javafx.scene.image.ImageView;
 public class PrincipalController {
     public ListView<Platform> lvPlatforms;
     public ListView<String> lvDetails;
-    private final PrincipalModel principalModel;
+    private PrincipalModel principalModel;
     public ImageView ivDetails;
-    private ObservableList<String> details;
+    private ObservableList<String> olDetails;
 
 
-    public PrincipalController() {
-        this.principalModel = new PrincipalModel();
-
-    }
+//    public PrincipalController() {
+//        this.principalModel = new PrincipalModel();
+//
+//    }
 
     @FXML
     public void initialize() {
-        principalModel.start(lvPlatforms);
-        details = FXCollections.observableArrayList();
-        lvDetails.setItems(details);
+        olDetails = FXCollections.observableArrayList();
+        principalModel = PrincipalModel.builder()
+                .ivDetails(ivDetails)
+                .lvDetails(lvDetails)
+                .olDetails(olDetails)
+                .lvPlatforms(lvPlatforms)
+                .build();
+        principalModel.start();
+        lvDetails.setItems(olDetails);
     }
 
     @FXML
     public void platformSelected() {
         Platform platform = lvPlatforms.getSelectionModel().getSelectedItem();
-        principalModel.showDetails(platform, lvDetails, details, platform.getImage_background(), ivDetails);
+        principalModel.showDetails(platform, platform.getImage_background());
     }
 }

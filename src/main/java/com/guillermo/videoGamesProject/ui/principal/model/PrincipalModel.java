@@ -1,6 +1,7 @@
 package com.guillermo.videoGamesProject.ui.principal.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.guillermo.videoGamesProject.api.ApiHelper.GetAllPlatformsHelper;
 import com.guillermo.videoGamesProject.api.service.VideogamesApiServiceImpl;
 import com.guillermo.videoGamesProject.domain.Platform;
 import javafx.collections.FXCollections;
@@ -8,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import lombok.Builder;
 import lombok.Data;
 import rx.schedulers.Schedulers;
 
@@ -17,32 +19,32 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 
 @Data
-
+@Builder
 public class PrincipalModel {
     private ListView<Platform> lvPlatforms;
     private ListView<String> lvDetails;
     private ImageView ivDetails;
-    private ObservableList<String> OlDetails;
+    private ObservableList<String> olDetails;
 
 
-    public void start(ListView listView) {
+    public void start() {
         VideogamesApiServiceImpl videogamesApiService = new VideogamesApiServiceImpl();
         ObservableList<Platform> platformObservableList = FXCollections.observableArrayList();
 
         videogamesApiService.getAllPlatforms()
-                .flatMapIterable(getAllPlatformsHelper -> getAllPlatformsHelper.getResults())
+                .flatMapIterable(GetAllPlatformsHelper::getResults)
                 .subscribeOn(Schedulers.from(Executors.newSingleThreadExecutor()))
-                .subscribe(platform -> platformObservableList.add(platform));
-        listView.setItems(platformObservableList);
+                .subscribe(platformObservableList::add);
+        lvPlatforms.setItems(platformObservableList);
     }
 
-    public void showDetails(Object object, ListView<String> listView, ObservableList<String> details, String uri, ImageView imageView) {
+    public void showDetails(Object object, String uri) {
         List<String> list = ObjectToString(object);
-        if (!details.isEmpty()) {
-            details.clear();
+        if (!olDetails.isEmpty()) {
+            olDetails.clear();
         }
-        listToObservableList(list, details);
-        setImage(uri, imageView);
+        listToObservableList(list, olDetails);
+        setImage(uri);
     }
 
     public List<String> ObjectToString(Object object) {
@@ -64,8 +66,8 @@ public class PrincipalModel {
         }
     }
 
-    public void setImage(String uri, ImageView imageView) {
+    public void setImage(String uri) {
         Image image = new Image(uri);
-        imageView.setImage(image);
+        ivDetails.setImage(image);
     }
 }
