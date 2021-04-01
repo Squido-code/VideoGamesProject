@@ -85,7 +85,7 @@
         </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="427.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="569.0" prefWidth="911.0" VBox.vgrow="ALWAYS">
          <children>
             <Label layoutX="121.0" layoutY="33.0" text="Platforms">
                <font>
@@ -94,16 +94,16 @@
             </Label>
             <ScrollPane layoutX="60.0" layoutY="68.0" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="68.0">
                <content>
-                  <ListView fx:id="lvPlatforms" prefHeight="200.0" prefWidth="200.0" />
+                  <ListView fx:id="lvPlatforms" onMouseClicked="#platformSelected" prefHeight="200.0" prefWidth="200.0" />
                </content>
             </ScrollPane>
-            <ListView fx:id="lvDetails" layoutX="185.0" layoutY="325.0" prefHeight="200.0" prefWidth="200.0" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="446.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ivdetails" fitHeight="150.0" fitWidth="200.0" layoutX="446.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
             <Label layoutX="432.0" layoutY="287.0" text="Details">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
+            <ListView fx:id="lvDetails" layoutX="177.0" layoutY="325.0" prefHeight="150.0" prefWidth="200.0" stylesheets="@style.css" />
          </children>
     </AnchorPane>
   </children>

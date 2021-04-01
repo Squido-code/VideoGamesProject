@@ -9,9 +9,9 @@ import java.net.URI;
 
 @Builder
 public class Platform {
-    private int id;
+    private String id;
     private String name;
-    private int games_count;
+    private String games_count;
     private URI image_background;
 
     public String toString(){

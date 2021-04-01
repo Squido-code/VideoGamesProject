@@ -1,37 +1,41 @@
 package com.guillermo.videoGamesProject.ui.principal.controller;
 
-import com.guillermo.videoGamesProject.api.ApiHelper.GetAllPlatformsHelper;
-import com.guillermo.videoGamesProject.api.ApiHelper.GetPlatformGamesHelper;
-import com.guillermo.videoGamesProject.api.service.VideogamesApiServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guillermo.videoGamesProject.domain.Platform;
 import com.guillermo.videoGamesProject.ui.principal.model.PrincipalModel;
-import io.reactivex.rxjava3.internal.operators.observable.ObservableLift;
+
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-import rx.Observable;
-import rx.schedulers.Schedulers;
 
-import java.util.concurrent.Executors;
+import java.util.List;
+import java.util.Map;
 
 
 public class PrincipalController {
     public ListView<Platform> lvPlatforms;
-    public ListView lvDetails;
-    private PrincipalModel principalModel;
+    public ListView<String> lvDetails;
+    private final PrincipalModel principalModel;
+    private ObservableList<String> details;
+
 
     public PrincipalController() {
         this.principalModel = new PrincipalModel();
+
     }
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         principalModel.start(lvPlatforms);
+        details = FXCollections.observableArrayList();
+        lvDetails.setItems(details);
     }
-    @FXML
-    public void platformSelected(){
-        Platform platform = lvPlatforms.getSelectionModel().getSelectedItem();
 
+    @FXML
+    public void platformSelected() {
+        Platform platform = lvPlatforms.getSelectionModel().getSelectedItem();
+        principalModel.showDetails(platform,lvDetails,details);
     }
 }
