@@ -1,5 +1,6 @@
 package com.guillermo.videoGamesProject.ui.principal.controller;
 
+import com.guillermo.videoGamesProject.api.service.VideogamesApiServiceImpl;
 import com.guillermo.videoGamesProject.domain.Console;
 import com.guillermo.videoGamesProject.domain.Videogame;
 import com.guillermo.videoGamesProject.ui.principal.model.PrincipalModel;
@@ -8,8 +9,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import lombok.Data;
 
-
+@Data
 public class PrincipalController {
     public ListView<Console> lvConsole;
     public ListView<String> lvDetails;
@@ -29,8 +31,8 @@ public class PrincipalController {
                 .olDetails(olDetails)
                 .lvConsole(lvConsole)
                 .lvGames(lvGames)
+                .videogamesApiService(new VideogamesApiServiceImpl())
                 .build();
-        principalModel.start();
         lvDetails.setItems(olDetails);
     }
 

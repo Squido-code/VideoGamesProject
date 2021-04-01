@@ -24,6 +24,7 @@ public class PrincipalView {
             Scene scene = new Scene(vBox);
             stage.setScene(scene);
             stage.show();
+            controller.getPrincipalModel().start();
         } catch (IOException e) {
             e.printStackTrace();
         }

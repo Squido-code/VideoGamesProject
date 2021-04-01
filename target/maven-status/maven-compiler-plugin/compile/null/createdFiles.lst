@@ -1,4 +1,5 @@
 com\guillermo\videoGamesProject\api\ApiHelper\GetAllPlatformsHelper.class
+com\guillermo\videoGamesProject\ui\principal\model\PrincipalModel$2.class
 com\guillermo\videoGamesProject\App.class
 com\guillermo\videoGamesProject\api\service\VideogamesApiServiceImpl.class
 com\guillermo\videoGamesProject\util\Resources.class
@@ -12,4 +13,5 @@ com\guillermo\videoGamesProject\domain\Console$ConsoleBuilder.class
 com\guillermo\videoGamesProject\domain\Videogame$VideogameBuilder.class
 com\guillermo\videoGamesProject\domain\Console.class
 com\guillermo\videoGamesProject\api\ApiHelper\GetPlatformGamesHelper.class
+com\guillermo\videoGamesProject\ui\principal\model\PrincipalModel$1.class
 com\guillermo\videoGamesProject\ui\principal\model\PrincipalModel$PrincipalModelBuilder.class

@@ -8,6 +8,7 @@ import com.guillermo.videoGamesProject.domain.Console;
 import com.guillermo.videoGamesProject.domain.Videogame;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,24 +32,36 @@ public class PrincipalModel {
     private ListView<Videogame> lvGames;
 
     public void start() {
-        videogamesApiService = new VideogamesApiServiceImpl();
-        ObservableList<Console> consoleObservableList = FXCollections.observableArrayList();
-        videogamesApiService.getAllPlatforms()
-                .flatMapIterable(GetAllPlatformsHelper::getResults)
-                .subscribeOn(Schedulers.from(Executors.newSingleThreadExecutor()))
-                .subscribe(consoleObservableList::add);
-        lvConsole.setItems(consoleObservableList);
+        Task<Void> task = new Task() {
+            @Override
+            protected Object call() throws Exception {
+                ObservableList<Console> consoleObservableList = FXCollections.observableArrayList();
+                videogamesApiService.getAllPlatforms()
+                        .flatMapIterable(GetAllPlatformsHelper::getResults)
+                        .subscribeOn(Schedulers.from(Executors.newSingleThreadExecutor()))
+                        .subscribe(consoleObservableList::add);
+                lvConsole.setItems(consoleObservableList);
+                return null;
+            }
+        };
+        new Thread(task).start();
     }
 
     public void setVideogames(String id) {
-        ObservableList<Videogame> videogameObservableList = FXCollections.observableArrayList();
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                ObservableList<Videogame> videogameObservableList = FXCollections.observableArrayList();
+                videogamesApiService.getPlatformGames(id)
+                        .flatMapIterable(GetPlatformGamesHelper::getResults)
+                        .subscribeOn(Schedulers.from(Executors.newSingleThreadExecutor()))
+                        .subscribe(videogameObservableList::add);
 
-        videogamesApiService.getPlatformGames(id)
-                .flatMapIterable(GetPlatformGamesHelper::getResults)
-                .subscribeOn(Schedulers.from(Executors.newSingleThreadExecutor()))
-                .subscribe(videogameObservableList::add);
-
-        lvGames.setItems(videogameObservableList);
+                lvGames.setItems(videogameObservableList);
+                return null;
+            }
+        };
+        new Thread(task).start();
     }
 
     public void showDetails(Object object, String uri) {
