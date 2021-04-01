@@ -6,6 +6,7 @@ import com.guillermo.videoGamesProject.api.ApiHelper.GetPlatformGamesHelper;
 import com.guillermo.videoGamesProject.api.service.VideogamesApiServiceImpl;
 import com.guillermo.videoGamesProject.domain.Console;
 import com.guillermo.videoGamesProject.domain.Videogame;
+import com.guillermo.videoGamesProject.ui.principal.PrincipalInterface;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,7 +25,7 @@ import java.util.concurrent.Executors;
 
 @Data
 @Builder
-public class PrincipalModel {
+public class PrincipalModel implements PrincipalInterface.Model {
     private ListView<Console> lvConsole;
     private ListView<String> lvDetails;
     private ImageView ivDetails;

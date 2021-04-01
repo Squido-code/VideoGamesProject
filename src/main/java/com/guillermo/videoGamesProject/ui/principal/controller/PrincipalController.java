@@ -3,6 +3,7 @@ package com.guillermo.videoGamesProject.ui.principal.controller;
 import com.guillermo.videoGamesProject.api.service.VideogamesApiServiceImpl;
 import com.guillermo.videoGamesProject.domain.Console;
 import com.guillermo.videoGamesProject.domain.Videogame;
+import com.guillermo.videoGamesProject.ui.principal.PrincipalInterface;
 import com.guillermo.videoGamesProject.ui.principal.model.PrincipalModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +14,7 @@ import javafx.scene.image.ImageView;
 import lombok.Data;
 
 @Data
-public class PrincipalController {
+public class PrincipalController implements PrincipalInterface.Controller {
     public ListView<Console> lvConsole;
     public ListView<String> lvDetails;
     public ImageView ivDetails;
@@ -52,5 +53,15 @@ public class PrincipalController {
     public void gameSelected() {
         Videogame videogame = lvGames.getSelectionModel().getSelectedItem();
         principalModel.showDetails(videogame, videogame.getBackground_image());
+    }
+
+    @Override
+    public void SearchConsoleByname() {
+
+    }
+
+    @Override
+    public void SearchGameByname() {
+
     }
 }
