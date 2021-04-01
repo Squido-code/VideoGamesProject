@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
 import lombok.Data;
 
@@ -17,6 +18,8 @@ public class PrincipalController {
     public ListView<String> lvDetails;
     public ImageView ivDetails;
     public ListView<Videogame> lvGames;
+    public ProgressIndicator piConsole;
+    public ProgressIndicator piGames;
 
     private PrincipalModel principalModel;
     private ObservableList<String> olDetails;
@@ -31,6 +34,8 @@ public class PrincipalController {
                 .olDetails(olDetails)
                 .lvConsole(lvConsole)
                 .lvGames(lvGames)
+                .piConsole(piConsole)
+                .piGames(piGames)
                 .videogamesApiService(new VideogamesApiServiceImpl())
                 .build();
         lvDetails.setItems(olDetails);

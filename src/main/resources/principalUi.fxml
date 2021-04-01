@@ -57,16 +57,16 @@
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Undo"/>
+                        <MenuItem mnemonicParsing="false" text="Redo"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem mnemonicParsing="false" text="Cut"/>
+                        <MenuItem mnemonicParsing="false" text="Copy"/>
+                        <MenuItem mnemonicParsing="false" text="Paste"/>
+                        <MenuItem mnemonicParsing="false" text="Delete"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem mnemonicParsing="false" text="Select All"/>
             <MenuItem mnemonicParsing="false" text="Unselect All" />
           </items>
         </Menu>
@@ -77,36 +77,40 @@
         </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="569.0" prefWidth="911.0" VBox.vgrow="ALWAYS">
-        <children>
-            <Label layoutX="121.0" layoutY="33.0" text="Platforms">
-                <font>
-                    <Font size="19.0"/>
-                </font>
-            </Label>
-            <ScrollPane layoutX="60.0" layoutY="68.0" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="68.0">
-                <content>
-                    <ListView fx:id="lvConsole" onMouseClicked="#consoleSelected" prefHeight="200.0"
-                              prefWidth="200.0"/>
-                </content>
-            </ScrollPane>
-            <ImageView fx:id="ivDetails" fitHeight="150.0" fitWidth="200.0" layoutX="397.0" layoutY="323.0"
-                       pickOnBounds="true" preserveRatio="true"/>
-            <Label layoutX="327.0" layoutY="295.0" text="Details">
-                <font>
-                    <Font size="19.0"/>
-                </font>
-            </Label>
-            <ListView fx:id="lvDetails" layoutX="127.0" layoutY="341.0" prefHeight="150.0" prefWidth="200.0"
-                      stylesheets="@style.css"/>
-            <ListView fx:id="lvGames" layoutX="432.0" layoutY="69.0" onMouseClicked="#gameSelected" prefHeight="200.0"
-                      prefWidth="200.0"/>
-            <Label layoutX="503.0" layoutY="33.0" text="Games">
-                <font>
-                    <Font size="19.0"/>
-                </font>
-            </Label>
-        </children>
-    </AnchorPane>
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="569.0" prefWidth="911.0" VBox.vgrow="ALWAYS">
+            <children>
+                <Label layoutX="121.0" layoutY="33.0" text="Platforms">
+                    <font>
+                        <Font size="19.0"/>
+                    </font>
+                </Label>
+                <ScrollPane layoutX="60.0" layoutY="68.0" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="68.0">
+                    <content>
+                        <ListView fx:id="lvConsole" onMouseClicked="#consoleSelected" prefHeight="200.0"
+                                  prefWidth="200.0"/>
+                    </content>
+                </ScrollPane>
+                <ImageView fx:id="ivDetails" fitHeight="150.0" fitWidth="200.0" layoutX="397.0" layoutY="323.0"
+                           pickOnBounds="true" preserveRatio="true"/>
+                <Label layoutX="327.0" layoutY="295.0" text="Details">
+                    <font>
+                        <Font size="19.0"/>
+                    </font>
+                </Label>
+                <ListView fx:id="lvDetails" layoutX="127.0" layoutY="341.0" prefHeight="150.0" prefWidth="200.0"
+                          stylesheets="@style.css"/>
+                <ListView fx:id="lvGames" layoutX="432.0" layoutY="69.0" onMouseClicked="#gameSelected"
+                          prefHeight="200.0" prefWidth="200.0"/>
+                <Label layoutX="503.0" layoutY="33.0" text="Games">
+                    <font>
+                        <Font size="19.0"/>
+                    </font>
+                </Label>
+                <ProgressIndicator fx:id="piConsole" disable="true" layoutX="227.0" layoutY="33.0" opacity="0.0"
+                                   prefHeight="28.0" prefWidth="32.0"/>
+                <ProgressIndicator fx:id="piGames" disable="true" layoutX="604.0" layoutY="33.0" opacity="0.0"
+                                   prefHeight="28.0" prefWidth="57.0"/>
+            </children>
+        </AnchorPane>
   </children>
 </VBox>
