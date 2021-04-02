@@ -7,6 +7,11 @@ import com.guillermo.videoGamesProject.api.service.VideogamesApiServiceImpl;
 import com.guillermo.videoGamesProject.domain.Console;
 import com.guillermo.videoGamesProject.domain.Videogame;
 import com.guillermo.videoGamesProject.ui.principal.PrincipalInterface;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,10 +19,16 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import lombok.Builder;
 import lombok.Data;
 import rx.schedulers.Schedulers;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -133,4 +144,49 @@ public class PrincipalModel implements PrincipalInterface.Model {
         consoleObservableList.clear();
         consoleObservableList.addAll(backupConsoleList);
     }
+
+    public void exportToCSV(Stage stage, String listOf) {
+        File file = fileChooser(stage);
+        listToCSV(listOf, file);
+    }
+
+    private File fileChooser(Stage stage) {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(filter);
+        return fileChooser.showSaveDialog(stage);
+    }
+
+    private void listToCSV(String listOf, File file) {
+        switch (listOf) {
+            case "console":
+                try {
+                    Writer outputFile = new FileWriter(file);
+                    CSVWriter writer = new CSVWriter(outputFile);
+                    StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer).build();
+                    for (Console console : consoleObservableList) {
+                        beanToCsv.write(console);
+                    }
+                    writer.close();
+                } catch (IOException | CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "game":
+                try {
+                    Writer outputFile = new FileWriter(file);
+                    CSVWriter writer = new CSVWriter(outputFile);
+                    StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer).build();
+                    for (Videogame videogame : videogameObservableList) {
+                        beanToCsv.write(videogame);
+                    }
+                    writer.close();
+                } catch (IOException | CsvDataTypeMismatchException | CsvRequiredFieldEmptyException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+
+    }
+
 }

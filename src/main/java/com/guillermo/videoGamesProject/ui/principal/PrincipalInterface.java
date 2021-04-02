@@ -23,6 +23,10 @@ public interface PrincipalInterface {
         void resetGame();
 
         void resetConsole();
+
+        void exportConsole();
+
+        void exportGame();
     }
 
     interface Model {
@@ -43,5 +47,7 @@ public interface PrincipalInterface {
         void resetGames();
 
         void resetConsole();
+
+
     }
 }

@@ -26,6 +26,7 @@ public class PrincipalView implements PrincipalInterface.view {
             stage.setScene(scene);
             stage.show();
             controller.getPrincipalModel().start();
+            controller.setStage(stage);
         } catch (IOException e) {
             e.printStackTrace();
         }

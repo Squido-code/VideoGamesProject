@@ -7,11 +7,11 @@ import com.guillermo.videoGamesProject.ui.principal.PrincipalInterface;
 import com.guillermo.videoGamesProject.ui.principal.model.PrincipalModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import lombok.Data;
 
 
@@ -23,15 +23,17 @@ public class PrincipalController implements PrincipalInterface.Controller {
     public ListView<Videogame> lvGames;
     public ProgressIndicator piConsole;
     public ProgressIndicator piGames;
+    public TextField tfConsoleName;
+    public TextField tfGameName;
+
     public static ObservableList<Console> consoleObservableList = FXCollections.observableArrayList();
     public static ObservableList<Videogame> videogameObservableList = FXCollections.observableArrayList();
 
     private PrincipalModel principalModel;
     private ObservableList<String> olDetails;
-    public TextField tfConsoleName;
-    public TextField tfGameName;
+    private Stage stage;
 
-    @FXML
+    @Override
     public void initialize() {
         olDetails = FXCollections.observableArrayList();
         principalModel = PrincipalModel.builder()
@@ -48,7 +50,7 @@ public class PrincipalController implements PrincipalInterface.Controller {
         lvGames.setItems(videogameObservableList);
     }
 
-    @FXML
+    @Override
     public void consoleSelected() {
         Console console = lvConsole.getSelectionModel().getSelectedItem();
         lvGames.getItems().clear();
@@ -56,7 +58,7 @@ public class PrincipalController implements PrincipalInterface.Controller {
         principalModel.setVideogames(console.getId());
     }
 
-    @FXML
+    @Override
     public void gameSelected() {
         Videogame videogame = lvGames.getSelectionModel().getSelectedItem();
         principalModel.showDetails(videogame, videogame.getBackground_image());
@@ -84,5 +86,15 @@ public class PrincipalController implements PrincipalInterface.Controller {
     public void resetConsole() {
         tfConsoleName.clear();
         principalModel.resetConsole();
+    }
+
+    @Override
+    public void exportConsole() {
+        principalModel.exportToCSV(stage, "console");
+    }
+
+    @Override
+    public void exportGame() {
+        principalModel.exportToCSV(stage, "game");
     }
 }
