@@ -1,6 +1,7 @@
 package com.guillermo.videoGamesProject.ui.principal;
 
 import javafx.collections.ObservableList;
+import javafx.stage.Stage;
 
 import java.util.List;
 
@@ -48,6 +49,7 @@ public interface PrincipalInterface {
 
         void resetConsole();
 
+        void exportToCSV(Stage stage, String listOf);
 
     }
 }

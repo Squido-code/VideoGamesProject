@@ -52,6 +52,9 @@ public class PrincipalModel implements PrincipalInterface.Model {
     private ObservableList<Videogame> backupGameList;
     private ObservableList<Console> backupConsoleList;
 
+    /**
+     * Populate the ConsoleListview when the program starts with the list of platforms from the API.
+     */
     public void start() {
         piConsole.setOpacity(1);
         videogamesApiService.getAllPlatforms()
@@ -60,6 +63,11 @@ public class PrincipalModel implements PrincipalInterface.Model {
                 .subscribe(consoleObservableList::add);
     }
 
+    /**
+     * populate the Gamelistview with the games asgined to an especific platform.
+     *
+     * @param id API console ID
+     */
     public void setVideogames(String id) {
         /**
          * No he conseguido evitar el error Not on FX application thread;
@@ -76,6 +84,12 @@ public class PrincipalModel implements PrincipalInterface.Model {
                 .subscribe(videogameObservableList::add);
     }
 
+    /**
+     * Show the attributes of an specific object at the ui.
+     *
+     * @param object Object which expect a Console or Videogame
+     * @param uri    String with the adress of the picture
+     */
     public void showDetails(Object object, String uri) {
         List<String> list = ObjectToString(object);
         if (!olDetails.isEmpty()) {
@@ -85,10 +99,16 @@ public class PrincipalModel implements PrincipalInterface.Model {
         setImage(uri);
     }
 
+    /**
+     * The method takes the attributes of an object minus the image URL and give them back as a List.
+     *
+     * @param object Object which expect a Console or Videogame
+     * @return List of Strings with the attrubutes of an espeficic object
+     */
     public List<String> ObjectToString(Object object) {
         List<String> list = new ArrayList<>();
         Map<String, String> map = new ObjectMapper().convertValue(object, Map.class);
-        if(!map.isEmpty()){
+        if (!map.isEmpty()) {
             map.remove("image_background");
             map.remove("background_image");
         }
@@ -99,15 +119,32 @@ public class PrincipalModel implements PrincipalInterface.Model {
         return list;
     }
 
+    /**
+     * convert a list into an observableList.
+     *
+     * @param list   List<>
+     * @param obList ObservableList
+     */
     public void listToObservableList(List<String> list, ObservableList<String> obList) {
         obList.addAll(list);
     }
 
+    /**
+     * show at the UI the a picture
+     *
+     * @param uri String of the URI
+     */
     public void setImage(String uri) {
         Image image = new Image(uri);
         ivDetails.setImage(image);
     }
 
+    /**
+     * Method that filters the content by name or partial name and display it. This creates a backupList which can be invoke to undo the changes.
+     *
+     * @param listOf String key word: console for platform and game for videogames
+     * @param name   String to search
+     */
     public void searchByName(String listOf, String name) {
         /**
          * La API no acepta busquedas parciales
@@ -135,21 +172,41 @@ public class PrincipalModel implements PrincipalInterface.Model {
 
     }
 
+    /**
+     * delete de filters applied to the list of platforms.
+     * This use the backuplist created.
+     */
     public void resetGames() {
         videogameObservableList.clear();
         videogameObservableList.addAll(backupGameList);
     }
 
+    /**
+     * delete de filters applied to the list of videogames.
+     * This use the backuplist created.
+     */
     public void resetConsole() {
         consoleObservableList.clear();
         consoleObservableList.addAll(backupConsoleList);
     }
 
+    /**
+     * Method that export the content shown by the listviews, to choose which list you need to send the keyword as parameter.
+     *
+     * @param stage  Stage
+     * @param listOf String key word: console for platform and game for videogames
+     */
     public void exportToCSV(Stage stage, String listOf) {
         File file = fileChooser(stage);
         listToCSV(listOf, file);
     }
 
+    /**
+     * Create a file to storage the CSV, only create csv files.
+     *
+     * @param stage Stage
+     * @return File
+     */
     private File fileChooser(Stage stage) {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
@@ -157,6 +214,12 @@ public class PrincipalModel implements PrincipalInterface.Model {
         return fileChooser.showSaveDialog(stage);
     }
 
+    /**
+     * Method that fill a csv file with the content of one of the listviews, this is chose by the keywork as parameter.
+     *
+     * @param listOf String key word: console for platform and game for videogames
+     * @param file   File were to write the csv content
+     */
     private void listToCSV(String listOf, File file) {
         switch (listOf) {
             case "console":

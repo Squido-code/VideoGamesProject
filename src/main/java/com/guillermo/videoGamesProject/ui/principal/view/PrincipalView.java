@@ -14,6 +14,9 @@ import java.io.IOException;
 public class PrincipalView implements PrincipalInterface.view {
     public Stage stage;
 
+    /**
+     * Method that set the main ui into JAVAFX
+     */
     public void principalUi() {
         try {
             FXMLLoader loader = new FXMLLoader();
