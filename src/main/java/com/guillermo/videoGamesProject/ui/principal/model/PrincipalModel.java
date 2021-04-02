@@ -22,6 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static com.guillermo.videoGamesProject.ui.principal.controller.PrincipalController.consoleObservableList;
+import static com.guillermo.videoGamesProject.ui.principal.controller.PrincipalController.videogameObservableList;
 
 @Data
 @Builder
@@ -31,27 +36,31 @@ public class PrincipalModel implements PrincipalInterface.Model {
     private ImageView ivDetails;
     private ObservableList<String> olDetails;
     private VideogamesApiServiceImpl videogamesApiService;
-    private ListView<Videogame> lvGames;
     private ProgressIndicator piConsole;
     private ProgressIndicator piGames;
+    private ObservableList<Videogame> backupGameList;
+    private ObservableList<Console> backupConsoleList;
 
     public void start() {
         piConsole.setOpacity(1);
-        ObservableList<Console> consoleObservableList = FXCollections.observableArrayList();
         videogamesApiService.getAllPlatforms()
                 .flatMapIterable(GetAllPlatformsHelper::getResults)
-                .doOnCompleted(() -> Platform.runLater(() -> lvConsole.setItems(consoleObservableList)))
                 .doOnCompleted(() -> Platform.runLater(() -> piConsole.setOpacity(0)))
                 .subscribe(consoleObservableList::add);
     }
 
     public void setVideogames(String id) {
-        ObservableList<Videogame> videogameObservableList = FXCollections.observableArrayList();
+        /**
+         * No he conseguido evitar el error Not on FX application thread;
+         * He intentado usar Platform.runLater para meter el cambio del observableList en el mismo thread sin exito.
+         * He probado varias combinaciones usando las listviews sin exito tampoco.
+         * Mi objetivo es que se acutalice el observableList y automaticamente ya el Listview lo muestre.
+         * Apesar de esta excepcion la Listview muestra la lista actualizada.
+         */
         piGames.setOpacity(1);
         videogamesApiService.getPlatformGames(id)
                 .flatMapIterable(GetPlatformGamesHelper::getResults)
                 .subscribeOn(Schedulers.from(Executors.newSingleThreadExecutor()))
-                .doOnCompleted(() -> Platform.runLater(() -> lvGames.setItems(videogameObservableList)))
                 .doOnCompleted(() -> Platform.runLater(() -> piGames.setOpacity(0)))
                 .subscribe(videogameObservableList::add);
     }
@@ -80,13 +89,48 @@ public class PrincipalModel implements PrincipalInterface.Model {
     }
 
     public void listToObservableList(List<String> list, ObservableList<String> obList) {
-        for (String string : list) {
-            obList.add(string);
-        }
+        obList.addAll(list);
     }
 
     public void setImage(String uri) {
         Image image = new Image(uri);
         ivDetails.setImage(image);
+    }
+
+    public void searchByName(String listOf, String name) {
+        /**
+         * La API no acepta busquedas parciales
+         */
+        switch (listOf) {
+            case "console":
+                Stream<Console> consoleStream = consoleObservableList.stream();
+                List<Console> consoleList = consoleStream
+                        .filter(console -> console.getName().matches(".*" + name + ".*"))
+                        .collect(Collectors.toList());
+                backupConsoleList = FXCollections.observableArrayList(consoleObservableList);
+                consoleObservableList.clear();
+                consoleObservableList.addAll(consoleList);
+                break;
+            case "game":
+                Stream<Videogame> videogameStream = videogameObservableList.stream();
+                List<Videogame> videogameList = videogameStream
+                        .filter(videogame -> videogame.getName().matches(".*" + name + ".*"))
+                        .collect(Collectors.toList());
+                backupGameList = FXCollections.observableArrayList(videogameObservableList);
+                videogameObservableList.clear();
+                videogameObservableList.addAll(videogameList);
+                break;
+        }
+
+    }
+
+    public void resetGames() {
+        videogameObservableList.clear();
+        videogameObservableList.addAll(backupGameList);
+    }
+
+    public void resetConsole() {
+        consoleObservableList.clear();
+        consoleObservableList.addAll(backupConsoleList);
     }
 }

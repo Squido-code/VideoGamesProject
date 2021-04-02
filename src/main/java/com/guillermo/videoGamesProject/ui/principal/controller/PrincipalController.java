@@ -10,8 +10,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import lombok.Data;
+
 
 @Data
 public class PrincipalController implements PrincipalInterface.Controller {
@@ -21,10 +23,13 @@ public class PrincipalController implements PrincipalInterface.Controller {
     public ListView<Videogame> lvGames;
     public ProgressIndicator piConsole;
     public ProgressIndicator piGames;
+    public static ObservableList<Console> consoleObservableList = FXCollections.observableArrayList();
+    public static ObservableList<Videogame> videogameObservableList = FXCollections.observableArrayList();
 
     private PrincipalModel principalModel;
     private ObservableList<String> olDetails;
-
+    public TextField tfConsoleName;
+    public TextField tfGameName;
 
     @FXML
     public void initialize() {
@@ -34,17 +39,19 @@ public class PrincipalController implements PrincipalInterface.Controller {
                 .lvDetails(lvDetails)
                 .olDetails(olDetails)
                 .lvConsole(lvConsole)
-                .lvGames(lvGames)
                 .piConsole(piConsole)
                 .piGames(piGames)
                 .videogamesApiService(new VideogamesApiServiceImpl())
                 .build();
         lvDetails.setItems(olDetails);
+        lvConsole.setItems(consoleObservableList);
+        lvGames.setItems(videogameObservableList);
     }
 
     @FXML
     public void consoleSelected() {
         Console console = lvConsole.getSelectionModel().getSelectedItem();
+        lvGames.getItems().clear();
         principalModel.showDetails(console, console.getImage_background());
         principalModel.setVideogames(console.getId());
     }
@@ -57,11 +64,25 @@ public class PrincipalController implements PrincipalInterface.Controller {
 
     @Override
     public void SearchConsoleByname() {
-
+        String name = tfConsoleName.getText();
+        principalModel.searchByName("console", name);
     }
 
     @Override
     public void SearchGameByname() {
+        String name = tfGameName.getText();
+        principalModel.searchByName("game", name);
+    }
 
+    @Override
+    public void resetGame() {
+        tfGameName.clear();
+        principalModel.resetGames();
+    }
+
+    @Override
+    public void resetConsole() {
+        tfConsoleName.clear();
+        principalModel.resetConsole();
     }
 }
